@@ -47,7 +47,7 @@ function App() {
       console.log(lotteryData.address.toString())
 
       //line below should activate metamask to approvetransfer
-      // await web3.eth.sendTransaction({from: accounts[0],to: lottery.options.address, value: web3.utils.toWei("0.1", "ether")})
+      await web3.eth.sendTransaction({from: accounts[0],to: lottery.options.address, value: web3.utils.toWei("0.1", "ether")})
 
     }
 
