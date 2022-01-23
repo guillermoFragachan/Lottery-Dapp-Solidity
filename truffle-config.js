@@ -79,6 +79,7 @@ module.exports = {
   },
 
   // Configure your compilers
+  contracts_build_directory: './src/abis/',
   compilers: {
     solc: {
       version: "0.8.11",    // Fetch exact version from solc-bin (default: truffle's version)

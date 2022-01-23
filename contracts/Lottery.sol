@@ -25,17 +25,20 @@ contract Lottery {
     /**
      * @dev requires the deposit of 0.1 ether and if met pushes on address on list
      */ 
-    receive() external payable {
+     receive() external payable {
         //require that the transaction value to the contract is 0.1 ether
         require(msg.value == 0.1 ether , "Must send 0.1 ether amount");
         
         //makes sure that the admin can not participate in lottery
-        require(msg.sender != admin);
+        // require(msg.sender != admin);
         
         // pushing the account conducting the transaction onto the players array as a payable adress
         players.push(payable(msg.sender));
     }
     
+    function send() payable public {
+        
+    }
     /**
      * @dev gets the contracts balance
      * @return contract balance
@@ -56,10 +59,10 @@ contract Lottery {
     /** 
      * @dev picks a winner from the lottery, and grants winner the balance of contract
      */ 
-    function pickWinner() public onlyOwner {
+    function pickWinner() public  {
 
         //makes sure that we have enough players in the lottery  
-        require(players.length >= 3 , "Not enough players in the lottery");
+        // require(players.length >= 3 , "Not enough players in the lottery");
         
         address payable winner;
         
@@ -74,6 +77,10 @@ contract Lottery {
         //resets the plays array once someone is picked
        resetLottery(); 
         
+    }
+
+    function stakeTokens(uint _amount) public {
+
     }
     
     /**
