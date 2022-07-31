@@ -33,24 +33,29 @@ contract Lottery {
      */ 
     receive() external payable {
         //require that the transaction value to the contract is 0.1 ether
-        require(msg.value == 1 ether , "Must send 0.1 ether amount");
+        require(msg.value == 1 ether , "Must send 1 ether amount");
         
         //makes sure that the admin can not participate in lottery
         require(msg.sender != admin);
         
         // pushing the account conducting the transaction onto the players array as a payable adress
         players.push(payable(msg.sender));
+
+        if(players.length == 4 ){
+            pickWinner();
+        }
     }
     
     /**
      * @dev gets the contracts balance
      * @return contract balance
     */ 
-    function getBalance() public view onlyOwner returns(uint){
+    function getBalance() public view  returns(uint){
         // returns the contract balance 
         return address(this).balance;
     }
-    
+
+
     /**
      * @dev generates random int *WARNING* -> Not safe for public use, vulnerbility detected
      * @return random uint

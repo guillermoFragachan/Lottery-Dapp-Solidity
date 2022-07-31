@@ -2,7 +2,8 @@ import './App.css';
 import Web3 from 'web3'
 import React,{ useEffect, useState } from 'react';
 import Lottery from './abis/Lottery.json'
-
+import { DrizzleContext } from "@drizzle/react-plugin";
+import { Drizzle } from "@drizzle/store";
 
 function App() {
 
@@ -44,10 +45,13 @@ function App() {
       setLotteryContract(lottery)
       let stakingBalance = await lottery.methods.getBalance().call()
       setLotteryBalance(stakingBalance.toString())
-      console.log(lotteryData.address.toString())
+
+
+      // let totalPlayers = await lottery.methods.players(0).call()
+      // console.log(totalPlayers)
 
       //line below should activate metamask to approvetransfer
-      await web3.eth.sendTransaction({from: accounts[0],to: lottery.options.address, value: web3.utils.toWei("0.1", "ether")})
+      await web3.eth.sendTransaction({from: accounts[0],to: lottery.options.address, value: web3.utils.toWei("1", "ether")})
 
     }
 
@@ -65,11 +69,12 @@ const stakeTokens = async() => {
     blockchainData()
 
   },[])
-  
+
+ 
   return (
     <div className="App">
       
-      <div>{lotteryBalance}sdad</div>
+      <div>{lotteryBalance}: Lottery balance</div>
 
       
       
