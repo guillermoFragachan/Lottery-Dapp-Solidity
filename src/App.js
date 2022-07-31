@@ -10,6 +10,7 @@ function App() {
   const [senderAccount, setSenderAccount] = useState();
   const [lotteryBalance, setLotteryBalance] = useState()
   const [lotteryContract, setLotteryContract] =useState()
+  const [totalPlayers, setTotalPlayers] = useState()
 
   const loadWeb3 = async ()=>{
     if (window.ethereum) {
@@ -46,17 +47,29 @@ function App() {
       let stakingBalance = await lottery.methods.getBalance().call()
       setLotteryBalance(stakingBalance.toString())
 
+      
+      const amountOfPlayers = await lottery.methods.addressesP().call()
 
+      setTotalPlayers(amountOfPlayers)
+
+      console.log(totalPlayers, 'total amount of players')
       // let totalPlayers = await lottery.methods.players(0).call()
       // console.log(totalPlayers)
 
-      //line below should activate metamask to approvetransfer
-      await web3.eth.sendTransaction({from: accounts[0],to: lottery.options.address, value: web3.utils.toWei("1", "ether")})
+     
 
     }
 
 
  }
+
+const buyTicket = async () => {
+
+  const web3 = window.web3
+  const accounts = await web3.eth.getAccounts()
+  await web3.eth.sendTransaction({from: accounts[0],to: lotteryContract.options.address, value: web3.utils.toWei("1", "ether")})
+
+}
 
 const stakeTokens = async() => {
   const web3 = window.web3
@@ -76,8 +89,8 @@ const stakeTokens = async() => {
       
       <div>{lotteryBalance}: Lottery balance</div>
 
-      
-      
+      <div>{totalPlayers} players has bought their ticket </div>
+      <button onClick={()=>buyTicket()}>Get 1 Ticket </button>
 
       <button onClick={()=>stakeTokens()}>Stake</button>
     </div>
